@@ -18,6 +18,11 @@ variable "private_subnets" {
   default     = []
 }
 
+variable "database_subnets" {
+  description = "A list of database subnets inside the VPC"
+  default     = []
+}
+
 variable "azs" {
   description = "Number of availability zones to use in the region"
   type        = list(string)
