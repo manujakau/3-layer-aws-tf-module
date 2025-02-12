@@ -201,3 +201,9 @@ variable "isolate_subnet_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "create_isolate_subnet_route_table" {
+  description = "Controls if separate route table for isolate should be created"
+  type        = bool
+  default     = false
+}

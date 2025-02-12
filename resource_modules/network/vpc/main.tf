@@ -232,3 +232,44 @@ resource "aws_nat_gateway" "this" {
 
   depends_on = [aws_internet_gateway.this]
 }
+
+resource "aws_route" "private_nat_gateway" {
+  count = var.create_vpc && var.enable_nat_gateway ? local.nat_gateway_count : 0
+
+  route_table_id         = element(aws_route_table.private.*.id, count.index)
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = element(aws_nat_gateway.this.*.id, count.index)
+
+  timeouts {
+    create = "5m"
+  }
+}
+
+
+# Route table association
+resource "aws_route_table_association" "private" {
+  count = var.create_vpc && length(var.private_subnets) > 0 ? length(var.private_subnets) : 0
+
+  subnet_id = element(aws_subnet.private.*.id, count.index)
+  route_table_id = element(
+    aws_route_table.private.*.id,
+    var.single_nat_gateway ? 0 : count.index,
+  )
+}
+
+resource "aws_route_table_association" "isolate" {
+  count = var.create_vpc && length(var.isolate_subnets) > 0 ? length(var.isolate_subnets) : 0
+
+  subnet_id = element(aws_subnet.isolate.*.id, count.index)
+  route_table_id = element(
+    coalescelist(aws_route_table.isolate.*.id, aws_route_table.private.*.id),
+    var.single_nat_gateway || var.create_isolate_subnet_route_table ? 0 : count.index,
+  )
+}
+
+resource "aws_route_table_association" "public" {
+  count = var.create_vpc && length(var.public_subnets) > 0 ? length(var.public_subnets) : 0
+
+  subnet_id      = element(aws_subnet.public.*.id, count.index)
+  route_table_id = aws_route_table.public[0].id
+}
