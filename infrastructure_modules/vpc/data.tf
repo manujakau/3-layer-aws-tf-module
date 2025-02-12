@@ -34,18 +34,4 @@ locals {
       "Tier" = "private"
     }),
   )
-
-  ## DB SG ##
-  db_security_group_name        = "scg-${var.region_tag[var.region]}-${var.env}-database"
-  db_security_group_description = "Security group for database subnets"
-  db_security_group_tags = merge(
-    var.tags,
-    tomap({
-      "Name" = local.db_security_group_name
-    }),
-    tomap({
-      "Tier" = "database"
-    }),
-  )
-
 }
