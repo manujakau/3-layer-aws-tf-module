@@ -5,8 +5,8 @@ region           = "eu-central-1"
 role_name        = "Admin"
 profile_name     = "default"
 env              = "prod"
-application_name = "terraform-moduler-deployment"
-app_name         = "terraform-moduler-deployment"
+application_name = "tf-moduler"
+app_name         = "tf-moduler"
 
 ########################################
 # VPC
