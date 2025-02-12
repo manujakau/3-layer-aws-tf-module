@@ -7,7 +7,7 @@ module "vpc" {
   azs              = var.azs
   private_subnets  = var.private_subnets
   public_subnets   = var.public_subnets
-  database_subnets = var.database_subnets
+  isolate_subnets = var.isolate_subnets
 
   enable_dns_hostnames = var.enable_dns_hostnames
   enable_dns_support   = var.enable_dns_support

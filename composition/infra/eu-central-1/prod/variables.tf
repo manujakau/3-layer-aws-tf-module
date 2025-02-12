@@ -58,8 +58,8 @@ variable "private_subnets" {
   default     = []
 }
 
-variable "database_subnets" {
-  description = "A list of database subnets inside the VPC"
+variable "isolate_subnets" {
+  description = "A list of isolate subnets inside the VPC"
   default     = []
 }
 

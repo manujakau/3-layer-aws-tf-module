@@ -34,8 +34,8 @@ variable "private_subnets" {
   default     = []
 }
 
-variable "database_subnets" {
-  description = "A list of database subnets"
+variable "isolate_subnets" {
+  description = "A list of isolate subnets"
   type        = list(string)
   default     = []
 }

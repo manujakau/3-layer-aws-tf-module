@@ -30,7 +30,7 @@ module "s3_bucket_terraform_remote_backend" {
 
 ## Dynamodb for TF state locking
 module "dynamodb_terraform_state_lock" {
-  source         = "../../resource_modules/database/dynamodb"
+  source         = "../../resource_modules/isolate/dynamodb"
   name           = local.dynamodb_name
   read_capacity  = var.read_capacity
   write_capacity = var.write_capacity
