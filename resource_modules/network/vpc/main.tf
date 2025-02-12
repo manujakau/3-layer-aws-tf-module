@@ -7,7 +7,7 @@ locals {
 
   vpc_id = element(
     concat(
-      aws_vpc_ipv4_cidr_block_association.this.*.vpc_id,
+      # aws_vpc_ipv4_cidr_block_association.this.*.vpc_id,
       aws_vpc.this.*.id,
       [""],
     ),

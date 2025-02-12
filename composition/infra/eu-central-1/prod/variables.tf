@@ -87,17 +87,3 @@ variable "single_nat_gateway" {
 variable "public_ingress_with_cidr_blocks" {
   type = list(any)
 }
-
-## Database security group ##
-variable "create_eks" {}
-variable "databse_computed_ingress_with_db_controller_source_security_group_id" {
-  default = ""
-}
-variable "databse_computed_ingress_with_eks_worker_source_security_group_ids" {
-  type = list(object({
-    rule                     = string
-    source_security_group_id = string
-    description              = string
-  }))
-  default = []
-}
