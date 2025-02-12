@@ -1,7 +1,6 @@
 locals {
   max_subnet_length = max(
     length(var.private_subnets),
-    length(var.database_subnets),
   )
   nat_gateway_count = var.single_nat_gateway ? 1 : var.one_nat_gateway_per_az ? length(var.azs) : local.max_subnet_length
 
@@ -80,5 +79,20 @@ resource "aws_subnet" "private" {
     },
     var.tags,
     var.private_subnet_tags,
+  )
+}
+
+
+resource "aws_internet_gateway" "this" {
+  count = var.create_vpc && var.create_igw && length(var.public_subnets) > 0 ? 1 : 0
+
+  vpc_id = local.vpc_id
+
+  tags = merge(
+    {
+      "Name" = format("%s", var.name)
+    },
+    var.tags,
+    var.igw_tags,
   )
 }
