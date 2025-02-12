@@ -165,3 +165,27 @@ variable "private_subnet_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "isolate_subnet_assign_ipv6_address_on_creation" {
+  description = "Assign IPv6 address on isolate subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch"
+  type        = bool
+  default     = null
+}
+
+variable "isolate_subnet_ipv6_prefixes" {
+  description = "Assigns IPv6 isolate subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list"
+  type        = list(string)
+  default     = []
+}
+
+variable "isolate_subnet_suffix" {
+  description = "Suffix to append to isolate subnets name"
+  type        = string
+  default     = "isolate"
+}
+
+variable "isolate_subnet_tags" {
+  description = "Additional tags for the isolate subnets"
+  type        = map(string)
+  default     = {}
+}

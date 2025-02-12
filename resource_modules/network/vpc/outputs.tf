@@ -13,6 +13,16 @@ output "vpc_cidr_block" {
   value       = concat(aws_vpc.this.*.cidr_block, [""])[0]
 }
 
+output "isolate_subnets" {
+  description = "List of IDs of public subnets"
+  value       = aws_subnet.isolate.*.id
+}
+
+output "isolate_subnets_cidr_blocks" {
+  description = "List of cidr_blocks of public subnets"
+  value       = aws_subnet.isolate.*.cidr_block
+}
+
 output "private_subnets" {
   description = "List of IDs of private subnets"
   value       = aws_subnet.private.*.id

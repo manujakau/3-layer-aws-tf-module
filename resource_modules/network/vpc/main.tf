@@ -84,44 +84,42 @@ resource "aws_subnet" "private" {
 }
 
 
-resource "aws_subnet" "private" {
-  count = var.create_vpc && length(var.private_subnets) > 0 ? length(var.private_subnets) : 0
+resource "aws_subnet" "isolate" {
+  count = var.create_vpc && length(var.isolate_subnets) > 0 ? length(var.isolate_subnets) : 0
 
   vpc_id                          = local.vpc_id
-  cidr_block                      = var.private_subnets[count.index]
+  cidr_block                      = var.isolate_subnets[count.index]
   availability_zone               = length(regexall("^[a-z]{2}-", element(var.azs, count.index))) > 0 ? element(var.azs, count.index) : null
   availability_zone_id            = length(regexall("^[a-z]{2}-", element(var.azs, count.index))) == 0 ? element(var.azs, count.index) : null
-  assign_ipv6_address_on_creation = var.private_subnet_assign_ipv6_address_on_creation == null ? var.assign_ipv6_address_on_creation : var.private_subnet_assign_ipv6_address_on_creation
+  assign_ipv6_address_on_creation = var.isolate_subnet_assign_ipv6_address_on_creation == null ? var.assign_ipv6_address_on_creation : var.isolate_subnet_assign_ipv6_address_on_creation
 
-  ipv6_cidr_block = var.enable_ipv6 && length(var.private_subnet_ipv6_prefixes) > 0 ? cidrsubnet(aws_vpc.this[0].ipv6_cidr_block, 8, var.private_subnet_ipv6_prefixes[count.index]) : null
+  ipv6_cidr_block = var.enable_ipv6 && length(var.isolate_subnet_ipv6_prefixes) > 0 ? cidrsubnet(aws_vpc.this[0].ipv6_cidr_block, 8, var.isolate_subnet_ipv6_prefixes[count.index]) : null
 
   tags = merge(
     {
       "Name" = format(
-        "%s-${var.private_subnet_suffix}-%s",
+        "%s-${var.isolate_subnet_suffix}-%s",
         var.name,
         element(var.azs, count.index),
       )
     },
     var.tags,
-    var.private_subnet_tags,
+    var.isolate_subnet_tags,
   )
 }
 
 
 
-resource "aws_internet_gateway" "this" {
-  count = var.create_vpc && var.create_igw && length(var.public_subnets) > 0 ? 1 : 0
+# resource "aws_internet_gateway" "this" {
+#   count = var.create_vpc && var.create_igw && length(var.public_subnets) > 0 ? 1 : 0
 
-  vpc_id = local.vpc_id
+#   vpc_id = local.vpc_id
 
-  tags = merge(
-    {
-      "Name" = format("%s", var.name)
-    },
-    var.tags,
-    var.igw_tags,
-  )
-}
-
-
+#   tags = merge(
+#     {
+#       "Name" = format("%s", var.name)
+#     },
+#     var.tags,
+#     var.igw_tags,
+#   )
+# }
