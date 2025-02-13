@@ -29,11 +29,11 @@ public_ingress_with_cidr_blocks = []
 ########################################
 # GATEWAYS
 ########################################
-create_vpn = "false"
-create_customer_gateway = "false"
+create_vpn = "true"
+create_customer_gateway = "true"
 customer_gateways = {
     IP1 = {
       bgp_asn    = 65000
-      ip_address = "0.0.0.0"
+      ip_address = "192.168.1.2"
     },
 }
