@@ -1,5 +1,5 @@
 module "terraform_remote_backend" {
-  source   = "../../../../infrastructure_modules/terraform_remote_backend"
+  source   = "../../../../infrastructure_modules/remotebackend"
   env      = var.env
   app_name = var.app_name
   region   = var.region
