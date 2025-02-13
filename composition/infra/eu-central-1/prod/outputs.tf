@@ -37,3 +37,8 @@ output "public_subnets_cidr_blocks" {
   description = "List of cidr_blocks of public subnets"
   value       = module.vpc.public_subnets_cidr_blocks
 }
+
+output "customer_gateway_ids" {
+  description = "List of IDs of Customer Gateway"
+  value       = module.vpn.customer_gateway_ids
+}

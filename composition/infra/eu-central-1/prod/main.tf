@@ -25,3 +25,13 @@ module "vpc" {
   tags     = local.vpc_tags
   region   = var.region
 }
+
+module "vpn" {
+  source = "../../../../infrastructure_modules/vpn"
+
+  name = var.app_name
+  tags = local.tags
+  create_vpn = var.create_vpn
+  create_customer_gateway = var.create_customer_gateway
+  customer_gateways = var.customer_gateways
+}

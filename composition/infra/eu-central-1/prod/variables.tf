@@ -87,3 +87,20 @@ variable "single_nat_gateway" {
 variable "public_ingress_with_cidr_blocks" {
   type = list(any)
 }
+
+
+# Gateways #
+variable "create_vpn" {
+  description = "Controls if VPN should be created"
+  default     = false
+}
+
+variable "create_customer_gateway" {
+  description = "Controls if VPN should be created"
+  default     = false
+}
+
+variable "customer_gateways" {
+  description = "Maps of Customer Gateway's attributes (BGP ASN and Gateway's Internet-routable external IP address)"
+  default     = {}
+}
