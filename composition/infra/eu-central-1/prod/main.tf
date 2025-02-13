@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "../../../../infrastructure_modules/vpc"
+  source = "../../../../infrastructure_modules/infra"
 
   name                 = var.app_name
   cidr                 = var.cidr
