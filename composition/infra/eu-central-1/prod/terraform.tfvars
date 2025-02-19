@@ -29,8 +29,8 @@ public_ingress_with_cidr_blocks = []
 ########################################
 # GATEWAYS
 ########################################
-create_vpn = "true"
-create_customer_gateway = "true"
+create_vpn = "false"
+create_customer_gateway = "false"
 customer_gateways = {
     IP1 = {
       bgp_asn    = 65000
