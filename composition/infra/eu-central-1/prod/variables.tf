@@ -104,3 +104,10 @@ variable "customer_gateways" {
   description = "Maps of Customer Gateway's attributes (BGP ASN and Gateway's Internet-routable external IP address)"
   default     = {}
 }
+
+
+# EKS #
+variable "cluster_name" {
+  description = "Name of the EKS cluster. prefix"
+  type        = string
+}

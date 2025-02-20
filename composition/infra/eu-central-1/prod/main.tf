@@ -24,6 +24,9 @@ module "vpc" {
   app_name = var.app_name
   tags     = local.vpc_tags
   region   = var.region
+
+  ## eks ##
+  cluster_name = var.cluster_name
 }
 
 module "vpn" {

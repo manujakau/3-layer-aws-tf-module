@@ -80,3 +80,10 @@ variable "region_tag" {
     "ap-northeast-1" = "apne1"
   }
 }
+
+
+# EKS #
+variable "cluster_name" {
+  description = "Name of the EKS cluster. prefix"
+  type        = string
+}

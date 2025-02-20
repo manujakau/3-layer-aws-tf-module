@@ -29,11 +29,23 @@ public_ingress_with_cidr_blocks = []
 ########################################
 # GATEWAYS
 ########################################
-create_vpn = "false"
+create_vpn              = "false"
 create_customer_gateway = "false"
 customer_gateways = {
-    IP1 = {
-      bgp_asn    = 65000
-      ip_address = "192.168.1.2"
-    },
+  IP1 = {
+    bgp_asn    = 65000
+    ip_address = "192.168.1.2"
+  },
 }
+
+
+
+########################################
+# EKS
+########################################
+cluster_name = "tf-moduler"
+# cluster_service_ipv4_cidr            = "172.20.0.0/16"
+# cluster_version                      = "1.32"
+# cluster_endpoint_private_access      = true
+# cluster_endpoint_public_access       = true
+# cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]

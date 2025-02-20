@@ -1,12 +1,16 @@
 locals {
   ## VPC ##  
   public_subnet_tags = {
-    "Tier" = "public"
+    "Tier" = "public",
+    "kubernetes.io/role/elb" = 1,
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
   # need tag for internal-elb to be able to create ELB
   private_subnet_tags = {
-    "Tier" = "private"
+    "Tier" = "private",
+    "kubernetes.io/role/internal-elb" = 1,
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
   ## Public SG ##
