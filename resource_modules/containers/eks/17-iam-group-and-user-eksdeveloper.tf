@@ -1,7 +1,7 @@
 resource "aws_iam_group" "eksdeveloper_iam_group" {
   count = var.create_eks ? 1 : 0
-  name = "${var.cluster_name}-eksdeveloper"
-  path = "/"
+  name  = "${var.cluster_name}-eksdeveloper"
+  path  = "/"
 }
 
 resource "aws_iam_group_policy" "eksdeveloper_iam_group_assumerole_policy" {
@@ -25,7 +25,7 @@ resource "aws_iam_group_policy" "eksdeveloper_iam_group_assumerole_policy" {
 }
 
 resource "aws_iam_user" "eksdeveloper_user" {
-  count = var.create_eks ? 1 : 0
+  count         = var.create_eks ? 1 : 0
   name          = "${var.cluster_name}-eksdeveloper01"
   path          = "/"
   force_destroy = true
@@ -34,7 +34,7 @@ resource "aws_iam_user" "eksdeveloper_user" {
 
 resource "aws_iam_group_membership" "eksdeveloper" {
   count = var.create_eks ? 1 : 0
-  name = "${var.cluster_name}-eksdeveloper-group-membership"
+  name  = "${var.cluster_name}-eksdeveloper-group-membership"
   users = [
     aws_iam_user.eksdeveloper_user[0].name
   ]

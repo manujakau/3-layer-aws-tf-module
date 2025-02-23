@@ -1,7 +1,7 @@
 resource "aws_eks_cluster" "eks_cluster" {
   count = var.create_eks ? 1 : 0
-  
-  name     = "${var.cluster_name}"
+
+  name     = var.cluster_name
   role_arn = aws_iam_role.eks_master_role[0].arn
   version  = var.cluster_version
 

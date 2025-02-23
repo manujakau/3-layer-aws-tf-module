@@ -1,5 +1,5 @@
 resource "aws_eks_node_group" "eks_ng_private" {
-  count = var.create_eks ? 1 : 0
+  count           = var.create_eks ? 1 : 0
   cluster_name    = aws_eks_cluster.eks_cluster[0].name
   node_group_name = "${var.cluster_name}-eks-ng-private"
   node_role_arn   = aws_iam_role.eks_nodegroup_role[0].arn

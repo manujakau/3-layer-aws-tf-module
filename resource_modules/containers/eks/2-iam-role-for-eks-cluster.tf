@@ -1,6 +1,6 @@
 resource "aws_iam_role" "eks_master_role" {
   count = var.create_eks ? 1 : 0
-  name = "${var.cluster_name}-eks-master-role"
+  name  = "${var.cluster_name}-eks-master-role"
 
   assume_role_policy = <<POLICY
 {
@@ -19,11 +19,13 @@ POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "eks-AmazonEKSClusterPolicy" {
+  count      = var.create_eks ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.eks_master_role[0].name
 }
 
 resource "aws_iam_role_policy_attachment" "eks-AmazonEKSVPCResourceController" {
+  count      = var.create_eks ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.eks_master_role[0].name
 }

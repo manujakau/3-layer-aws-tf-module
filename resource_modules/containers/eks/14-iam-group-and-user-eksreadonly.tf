@@ -1,7 +1,7 @@
 resource "aws_iam_group" "eksreadonly_iam_group" {
   count = var.create_eks ? 1 : 0
-  name = "${var.cluster_name}-eksreadonly"
-  path = "/"
+  name  = "${var.cluster_name}-eksreadonly"
+  path  = "/"
 }
 
 resource "aws_iam_group_policy" "eksreadonly_iam_group_assumerole_policy" {
@@ -25,7 +25,7 @@ resource "aws_iam_group_policy" "eksreadonly_iam_group_assumerole_policy" {
 }
 
 resource "aws_iam_user" "eksreadonly_user" {
-  count = var.create_eks ? 1 : 0
+  count         = var.create_eks ? 1 : 0
   name          = "${var.cluster_name}-eksreadonly01"
   path          = "/"
   force_destroy = true
@@ -34,7 +34,7 @@ resource "aws_iam_user" "eksreadonly_user" {
 
 resource "aws_iam_group_membership" "eksreadonly" {
   count = var.create_eks ? 1 : 0
-  name = "${var.cluster_name}-eksreadonly-group-membership"
+  name  = "${var.cluster_name}-eksreadonly-group-membership"
   users = [
     aws_iam_user.eksreadonly_user[0].name
   ]

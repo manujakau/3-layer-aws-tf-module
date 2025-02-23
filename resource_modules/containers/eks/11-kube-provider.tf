@@ -4,7 +4,7 @@ data "aws_eks_cluster_auth" "cluster" {
 }
 
 provider "kubernetes" {
-  host                   = aws_eks_cluster.eks_cluster[0].endpoint
-  cluster_ca_certificate = base64decode(aws_eks_cluster.eks_cluster[0].certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster[0].token
+  host                   = length(aws_eks_cluster.eks_cluster) > 0 ? aws_eks_cluster.eks_cluster[0].endpoint : null
+  cluster_ca_certificate = length(aws_eks_cluster.eks_cluster) > 0 ? base64decode(aws_eks_cluster.eks_cluster[0].certificate_authority[0].data) : ""
+  token                  = length(data.aws_eks_cluster_auth.cluster) > 0 ? data.aws_eks_cluster_auth.cluster[0].token : null
 }

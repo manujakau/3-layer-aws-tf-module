@@ -1,6 +1,6 @@
 resource "aws_iam_role" "eks_readonly_role" {
   count = var.create_eks ? 1 : 0
-  name = "${var.cluster_name}-eks-readonly-role"
+  name  = "${var.cluster_name}-eks-readonly-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -23,8 +23,8 @@ resource "aws_iam_role" "eks_readonly_role" {
 
 resource "aws_iam_role_policy" "eks_readonly_policy" {
   count = var.create_eks ? 1 : 0
-  name = "${var.cluster_name}-eks-full-access-policy"
-  role = aws_iam_role.eks_readonly_role[0].id
+  name  = "${var.cluster_name}-eks-full-access-policy"
+  role  = aws_iam_role.eks_readonly_role[0].id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
