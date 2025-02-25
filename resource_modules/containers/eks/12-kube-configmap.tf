@@ -33,8 +33,6 @@ locals {
 
   configmap_users = [
     {
-      # userarn  = "${aws_iam_user.admin_user[0].arn}"
-      # username = "${aws_iam_user.admin_user[0].name}"
       userarn  = "${length(aws_iam_user.admin_user) > 0 ? aws_iam_user.admin_user[0].arn : null}"
       username = "${length(aws_iam_user.admin_user) > 0 ? aws_iam_user.admin_user[0].name : null}"
       groups = [
@@ -42,8 +40,6 @@ locals {
       ]
     },
     {
-      # userarn  = "${aws_iam_user.basic_user[0].arn}"
-      # username = "${aws_iam_user.basic_user[0].name}"
       userarn  = "${length(aws_iam_user.basic_user) > 0 ? aws_iam_user.basic_user[0].arn : null}"
       username = "${length(aws_iam_user.basic_user) > 0 ? aws_iam_user.basic_user[0].name : null}"
       groups = [
