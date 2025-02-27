@@ -65,3 +65,14 @@ module "ecr" {
   tags                = local.tags
   ecr_repository_name = var.ecr_repository_name
 }
+
+module "ecs" {
+  source = "../../../../infrastructure_modules/ecs"
+
+  create_sg = var.create_sg
+  vpc_id = module.vpc.vpc_id
+  sg_alb_name = var.sg_alb_name
+  sg_alb_description = var.sg_alb_description
+  sg_alb_ingress_rules = var.sg_alb_ingress_rules
+  egress_rules = var.egress_rules
+}

@@ -71,3 +71,10 @@ output "ecr_repository_url" {
   description = "URL of the ECR Repository."
   value       = module.ecr.ecr_repository_url
 }
+
+# SECURITY GROUPS #
+
+output "security_group_alb_id" {
+  description = "ALB Security Group ID"
+  value       = module.ecs.security_group_alb_id
+}

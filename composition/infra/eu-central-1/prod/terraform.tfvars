@@ -11,7 +11,7 @@ app_name         = "tf-moduler"
 ########################################
 # VPC
 ########################################
-create_vpc           = false
+create_vpc           = true
 cidr                 = "10.1.0.0/16"
 azs                  = ["eu-central-1a", "eu-central-1c", "eu-central-1b"]
 public_subnets       = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"] # 256 IPs per subnet
@@ -58,5 +58,38 @@ eks_oidc_root_ca_thumbprint          = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280
 ########################################
 # ECR
 ########################################
-create_ecr          = false
+create_ecr          = true
 ecr_repository_name = "tf-moduler"
+
+
+
+########################################
+# SECURITY GROUPS
+########################################
+create_sg = true
+
+# alb sg #
+sg_alb_name        = "tf-moduler-alb"
+sg_alb_description = "moduler ecs alb"
+sg_alb_ingress_rules = [
+  {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  },
+  {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+]
+
+# comman sg data #
+egress_rules = [{
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+}]

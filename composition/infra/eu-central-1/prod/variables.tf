@@ -163,3 +163,30 @@ variable "ecr_repository_name" {
   description = "Name of the Repository. prefix"
   default     = ""
 }
+
+
+# SG's #
+variable "create_sg" {
+  description = "Whether to create the security group"
+  default     = false
+}
+
+variable "sg_alb_name" {
+  description = "Security group name"
+  default = ""
+}
+
+variable "sg_alb_description" {
+  description = "Security group description"
+  default     = ""
+}
+
+variable "sg_alb_ingress_rules" {
+  description = "List of ingress rules"
+  default = []
+}
+
+variable "egress_rules" {
+  description = "List of egress rules"
+  default = []
+}
