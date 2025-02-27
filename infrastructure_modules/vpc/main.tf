@@ -1,12 +1,14 @@
 module "vpc" {
   source = "../../resource_modules/network/vpc"
 
+  create_vpc = var.create_vpc
+
   name = var.name
   cidr = var.cidr
 
-  azs              = var.azs
-  private_subnets  = var.private_subnets
-  public_subnets   = var.public_subnets
+  azs             = var.azs
+  private_subnets = var.private_subnets
+  public_subnets  = var.public_subnets
   isolate_subnets = var.isolate_subnets
 
   enable_dns_hostnames = var.enable_dns_hostnames
@@ -15,9 +17,9 @@ module "vpc" {
   enable_nat_gateway = var.enable_nat_gateway
   single_nat_gateway = var.single_nat_gateway
 
-  tags                 = var.tags
-  public_subnet_tags   = local.public_subnet_tags
-  private_subnet_tags  = local.private_subnet_tags
+  tags                = var.tags
+  public_subnet_tags  = local.public_subnet_tags
+  private_subnet_tags = local.private_subnet_tags
 }
 
 # # allow ingress for port 80 & 443 from anywhere (i.e. source CIDR 0.0.0.0/0)

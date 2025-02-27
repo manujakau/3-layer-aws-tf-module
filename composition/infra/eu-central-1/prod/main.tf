@@ -1,6 +1,7 @@
 module "vpc" {
   source = "../../../../infrastructure_modules/vpc"
 
+  create_vpc           = var.create_vpc
   name                 = var.app_name
   cidr                 = var.cidr
   azs                  = var.azs

@@ -11,6 +11,7 @@ app_name         = "tf-moduler"
 ########################################
 # VPC
 ########################################
+create_vpc           = false
 cidr                 = "10.1.0.0/16"
 azs                  = ["eu-central-1a", "eu-central-1c", "eu-central-1b"]
 public_subnets       = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"] # 256 IPs per subnet
@@ -29,8 +30,8 @@ public_ingress_with_cidr_blocks = []
 ########################################
 # GATEWAYS
 ########################################
-create_vpn              = "false"
-create_customer_gateway = "false"
+create_vpn              = false
+create_customer_gateway = false
 customer_gateways = {
   IP1 = {
     bgp_asn    = 65000
@@ -57,5 +58,5 @@ eks_oidc_root_ca_thumbprint          = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280
 ########################################
 # ECR
 ########################################
-create_ecr = true
+create_ecr          = true
 ecr_repository_name = "tf-moduler"
