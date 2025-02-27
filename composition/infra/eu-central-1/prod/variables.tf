@@ -146,3 +146,15 @@ variable "eks_oidc_root_ca_thumbprint" {
   default     = ""
   description = "Thumbprint of Root CA for EKS OIDC"
 }
+
+
+# ECR #
+variable "create_ecr" {
+  description = "Controls if VPN should be created"
+  default     = false
+}
+
+variable "ecr_repository_name" {
+  description = "Name of the Repository. prefix"
+  default     = ""
+}

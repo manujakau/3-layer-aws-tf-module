@@ -40,7 +40,7 @@ module "vpn" {
 }
 
 module "eks" {
-  source                               = "../../../../infrastructure_modules/eks"
+  source = "../../../../infrastructure_modules/eks"
 
   create_eks                           = var.create_eks
   account_id                           = local.account_id
@@ -55,4 +55,12 @@ module "eks" {
   cluster_endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
   tags                                 = local.tags
   eks_oidc_root_ca_thumbprint          = var.eks_oidc_root_ca_thumbprint
+}
+
+module "ecr" {
+  source = "../../../../infrastructure_modules/ecr"
+
+  create_ecr          = var.create_ecr
+  tags                = local.tags
+  ecr_repository_name = var.ecr_repository_name
 }
