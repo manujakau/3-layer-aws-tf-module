@@ -70,6 +70,7 @@ module "ecs" {
   source = "../../../../infrastructure_modules/ecs"
 
   create_sg = var.create_sg
+  
   vpc_id = module.vpc.vpc_id
   sg_alb_name = var.sg_alb_name
   sg_alb_description = var.sg_alb_description

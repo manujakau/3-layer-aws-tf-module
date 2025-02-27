@@ -1,5 +1,5 @@
 module "sg_alb" {
-  source = "../../resource_modules/compute/sg"
+  source = "../../resource_modules/compute/sg/sg_ip"
 
   create_sg      = var.create_sg
   sg_name        = var.sg_alb_name
