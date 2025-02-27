@@ -190,3 +190,18 @@ variable "egress_rules" {
   description = "List of egress rules"
   default = []
 }
+
+variable "sg_service_name" {
+  description = "Security group name"
+  default = ""
+}
+
+variable "sg_service_description" {
+  description = "Security group description"
+  default     = ""
+}
+
+variable "sg_service_ingress_rules" {
+  description = "List of ingress rules"
+  default = []
+}

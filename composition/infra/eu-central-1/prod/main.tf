@@ -16,10 +16,6 @@ module "vpc" {
   ## Public Security Group ##
   public_ingress_with_cidr_blocks = var.public_ingress_with_cidr_blocks
 
-  ## Private Security Group ##
-  # bastion EC2 not created yet
-  # bastion_sg_id  = module.bastion.security_group_id
-
   ## Common tag metadata ##
   env      = var.env
   app_name = var.app_name
@@ -70,10 +66,20 @@ module "ecs" {
   source = "../../../../infrastructure_modules/ecs"
 
   create_sg = var.create_sg
-  
+
   vpc_id = module.vpc.vpc_id
-  sg_alb_name = var.sg_alb_name
-  sg_alb_description = var.sg_alb_description
+
+  sg_alb_name          = var.sg_alb_name
+  sg_alb_description   = var.sg_alb_description
   sg_alb_ingress_rules = var.sg_alb_ingress_rules
-  egress_rules = var.egress_rules
+  egress_rules         = var.egress_rules
+
+  sg_service_name        = var.sg_service_name
+  sg_service_description = var.sg_service_description
+  sg_service_ingress_rules = [{
+    from_port                = 0
+    to_port                  = 0
+    protocol                 = "-1"
+    source_security_group_id = module.ecs.security_group_alb_id # cannot take from .tfvars. also act as depends_on. 
+  }]
 }

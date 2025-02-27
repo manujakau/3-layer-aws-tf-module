@@ -70,7 +70,7 @@ create_sg = true
 
 # alb sg #
 sg_alb_name        = "tf-moduler-alb"
-sg_alb_description = "moduler ecs alb"
+sg_alb_description = "moduler-ecs-alb"
 sg_alb_ingress_rules = [
   {
     from_port   = 80
@@ -85,6 +85,10 @@ sg_alb_ingress_rules = [
     cidr_blocks = ["0.0.0.0/0"]
   }
 ]
+
+# service sg #
+sg_service_name = "tf-moduler-service"
+sg_service_description = "moduler-ecs-service"
 
 # comman sg data #
 egress_rules = [{
