@@ -82,4 +82,18 @@ module "ecs" {
     protocol                 = "-1"
     source_security_group_id = module.ecs.security_group_alb_id # cannot take from .tfvars. also act as depends_on. 
   }]
+
+  create_ecs                   = var.create_ecs
+  ecs_cluster_name             = var.ecs_cluster_name
+  subnets                      = module.vpc.private_subnets
+  ecs_task_execution_role_name = var.ecs_task_execution_role_name
+  task_famliy                  = var.task_famliy
+  task_name                    = var.task_name
+  ecr_repo_url                 = module.ecr.ecr_repository_url
+  container_port               = var.container_port
+  alb_name                     = var.alb_name
+  alb_seurity_group_id         = module.ecs.security_group_alb_id
+  alb_target_group_name        = var.alb_target_group_name
+  app_service_name             = var.app_service_name
+  service_security_group_id    = module.ecs.service_security_group_id
 }

@@ -27,7 +27,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_ecs_task_definition" "demo_app_task" {
+resource "aws_ecs_task_definition" "app_task" {
   count                    = var.create_ecs ? 1 : 0
   family                   = var.task_famliy
   container_definitions    = <<DEFINITION
@@ -55,12 +55,50 @@ resource "aws_ecs_task_definition" "demo_app_task" {
 }
 
 resource "aws_alb" "application_load_balancer" {
+  count              = var.create_ecs ? 1 : 0
   name               = var.alb_name
   load_balancer_type = "application"
-  subnets = [
-    "${var.subnets[0]}",
-    "${var.subnets[1]}",
-    "${var.subnets[2]}"
-  ]
-  security_groups = [var.alb_seurity_group_id]
+  subnets            = var.create_ecs && length(var.subnets) >= 2 ? slice(var.subnets, 0, 2) : var.create_ecs ? var.subnets : []
+  security_groups    = ["${var.alb_seurity_group_id}"]
+}
+
+resource "aws_lb_target_group" "target_group" {
+  count       = var.create_ecs ? 1 : 0
+  name        = var.alb_target_group_name
+  port        = var.container_port
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = var.vpc_id
+}
+
+resource "aws_lb_listener" "listener" {
+  count             = var.create_ecs ? 1 : 0
+  load_balancer_arn = aws_alb.application_load_balancer[0].arn
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target_group[0].arn
+  }
+}
+
+resource "aws_ecs_service" "app_service" {
+  count           = var.create_ecs ? 1 : 0
+  name            = var.app_service_name
+  cluster         = aws_ecs_cluster.this[0].id
+  task_definition = aws_ecs_task_definition.app_task[0].arn
+  launch_type     = "FARGATE"
+  desired_count   = 1
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.target_group[0].arn
+    container_name   = aws_ecs_task_definition.app_task[0].family
+    container_port   = var.container_port
+  }
+
+  network_configuration {
+    subnets          = var.create_ecs && length(var.subnets) >= 2 ? slice(var.subnets, 0, 2) : var.create_ecs ? var.subnets : []
+    assign_public_ip = true
+    security_groups  = ["${var.service_security_group_id}"]
+  }
 }

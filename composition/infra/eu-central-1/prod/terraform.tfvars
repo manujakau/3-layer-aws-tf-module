@@ -87,7 +87,7 @@ sg_alb_ingress_rules = [
 ]
 
 # service sg #
-sg_service_name = "tf-moduler-service"
+sg_service_name        = "tf-moduler-service"
 sg_service_description = "moduler-ecs-service"
 
 # comman sg data #
@@ -97,3 +97,17 @@ egress_rules = [{
   protocol    = "-1"
   cidr_blocks = ["0.0.0.0/0"]
 }]
+
+
+########################################
+# ECS
+########################################
+create_ecs                   = true
+ecs_cluster_name             = "tf-moduler"
+ecs_task_execution_role_name = "tf-moduler-ecs_task_execution"
+task_famliy                  = "tf-moduler-task"
+task_name                    = "tf-moduler-task"
+container_port               = 3000
+alb_name                     = "tf-moduler"
+alb_target_group_name        = "tf-moduler-tg"
+app_service_name             = "tf-moduler-service"

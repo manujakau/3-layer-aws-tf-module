@@ -62,3 +62,18 @@ variable "alb_seurity_group_id" {
   description = "Application Loadbalancer Security group"
   type        = string
 }
+
+variable "alb_target_group_name" {
+  description = "Application Loadbalancer Target group name"
+  type        = string
+}
+
+variable "app_service_name" {
+  description = "Application service name"
+  type        = string
+}
+
+variable "service_security_group_id" {
+  description = "Service Security group"
+  type        = string
+}
