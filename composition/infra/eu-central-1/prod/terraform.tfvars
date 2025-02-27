@@ -58,5 +58,5 @@ eks_oidc_root_ca_thumbprint          = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280
 ########################################
 # ECR
 ########################################
-create_ecr          = true
+create_ecr          = false
 ecr_repository_name = "tf-moduler"
