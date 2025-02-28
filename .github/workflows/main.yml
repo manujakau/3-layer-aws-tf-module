@@ -37,6 +37,7 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
+        working-directory: composition/infra/eu-central-1/prod
         continue-on-error: true
 
       - name: Terraform Init
@@ -45,15 +46,18 @@ jobs:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
           AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
         run: terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
+        working-directory: composition/infra/eu-central-1/prod
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+        working-directory: composition/infra/eu-central-1/prod
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
         if: github.event_name == 'pull_request'
+        working-directory: composition/infra/eu-central-1/prod
         continue-on-error: true
 
       - uses: actions/github-script@v6
@@ -100,3 +104,4 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
+        working-directory: composition/infra/eu-central-1/prod
