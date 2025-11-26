@@ -5,20 +5,20 @@ terraform {
   required_providers {
     aws = {
       source                = "hashicorp/aws"
-      version               = ">= 5.90.1"
+      version               = ">= 6.22.1"
       configuration_aliases = [aws.XXX_old]
     }
     http = {
       source  = "hashicorp/http"
-      version = "~> 3.4.5"
+      version = "~> 3.5.0"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 2.17.0"
+      version = "~> 3.1.1"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.36.0"
+      version = "~> 2.38.0"
     }
   }
 }
