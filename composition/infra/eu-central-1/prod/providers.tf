@@ -5,7 +5,7 @@ terraform {
   required_providers {
     aws = {
       source                = "hashicorp/aws"
-      version               = ">= 6.22.1"
+      version               = ">= 6.33.0"
       configuration_aliases = [aws.XXX_old]
     }
     http = {
@@ -18,7 +18,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.38.0"
+      version = "~> 3.0.1"
     }
   }
 }
