@@ -131,7 +131,7 @@ Raw variables are processed within the `locals` block.
 To maintain naming consistency across global deployments:
 
 - `vpc_name` is dynamically generated.
-- A lookup against the `region_tag` map (defined in `variables.txt`) converts:
+- A lookup against the `region_tag` map (defined in `variables.tf`) converts:
   - `eu-central-1` → `ec1`
 
 ---
