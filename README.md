@@ -7,7 +7,12 @@
 
 This diagram illustrates the flow of data from external inputs into the internal logic and between specific infrastructure modules.
 
-graph TD
+
+Diagram
+
+<img width="1536" height="2752" alt="Image" src="https://github.com/user-attachments/assets/8f352d52-46fc-4ca0-bb0e-99127fab5269" />
+
+Flowchart
 
     subgraph Inputs [Input Layer]
         TFVARS[terraform.tfvars] -- "Assigns values" --> VARS[variables.tf]
