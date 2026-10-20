@@ -241,7 +241,9 @@ Network values for prod:
 
 The state bucket has to exist before the units can store state in it. Deploy in this order:
 
-### 1. Bootstrap the remote backend (local state)
+### 1. Bootstrap the remote backend
+
+In a new account the bucket doesn't exist yet, so the first apply uses local state. Comment out `backend "s3" {}` in `providers.tf` for this run:
 
 ```bash
 cd bootstrap/remotebackend/eu-central-1/prod
@@ -250,7 +252,13 @@ terraform apply
 terraform output -raw s3_terraform_remote_backend_id
 ```
 
-This stack keeps its own state in a local `terraform.tfstate` (git-ignored). Back that file up, or migrate it into the new bucket afterwards: uncomment `backend "s3" {}` and run `terraform init -migrate-state`. The DynamoDB table it creates is not used by the units, which lock with `use_lockfile = true`.
+Then move the bootstrap state into the bucket. Restore `backend "s3" {}`, put the bucket name into [backend.hcl](bootstrap/remotebackend/eu-central-1/prod/backend.hcl), and run:
+
+```bash
+terraform init -backend-config=backend.hcl -migrate-state
+```
+
+The state then lives at `bootstrap/eu-central-1/prod/terraform.tfstate` in the bucket, which is versioned, and the local `terraform.tfstate` can be deleted. The DynamoDB table this stack creates is not used: every state locks with `use_lockfile = true`.
 
 ### 2. Set the bucket in `live/root.hcl`
 
@@ -331,7 +339,6 @@ It authenticates through GitHub OIDC and needs these repository secrets: `AWS_RO
 These come from reading the current code. Fix them before relying on the stack in production.
 
 1. **The ALB is not reachable from the internet.** `module.ecs` gets `subnets = var.private_subnet_ids` (the `network` unit's private subnets). `containers/ecs` uses that one list for both the ALB and the service. The ALB is internet-facing (no `internal` flag), but private subnets route `0.0.0.0/0` to the NAT gateway, not the IGW. Add a separate `alb_subnets` input fed from the `network` unit's `public_subnets`. Also note that `assign_public_ip = true` on the service is pointless in private subnets: the public IP has no IGW route.
-2. **The state bucket is not versioned.** `versioning_enabled` is passed to `infrastructure_modules/remotebackend`, but it is never forwarded to `storage/s3`, which has no `aws_s3_bucket_versioning` resource. Add one so state history survives overwrites.
-3. **`eu-central-1` appears twice in the remote backend's `region_tag`.** In [infrastructure_modules/remotebackend/data.tf](infrastructure_modules/remotebackend/data.tf) it is mapped to both `ec1` and `euc1`. Terraform keeps the last one, so backend resources are named `…-euc1-…` while the infra stack uses `ec1`. Remove one entry. Changing it on a deployed backend renames, and so replaces, the bucket, table and KMS alias.
-4. **Some variable names are misspelled.** `task_famliy` and `alb_seurity_group_id` are misspelled across all three layers. Renaming them is a breaking interface change, so do it in one pass.
-5. **`containers/eks` declares its own `kubernetes` provider.** A module that configures a provider can't use `count` / `for_each` / `depends_on` and is awkward to remove. Consider moving the provider into `composition/eks`.
+2. **`eu-central-1` appears twice in the remote backend's `region_tag`.** In [infrastructure_modules/remotebackend/data.tf](infrastructure_modules/remotebackend/data.tf) it is mapped to both `ec1` and `euc1`. Terraform keeps the last one, so backend resources are named `…-euc1-…` while the infra stack uses `ec1`. Remove one entry. Changing it on a deployed backend renames, and so replaces, the bucket, table and KMS alias.
+3. **Some variable names are misspelled.** `task_famliy` and `alb_seurity_group_id` are misspelled across all three layers. Renaming them is a breaking interface change, so do it in one pass.
+4. **`containers/eks` declares its own `kubernetes` provider.** A module that configures a provider can't use `count` / `for_each` / `depends_on` and is awkward to remove. Consider moving the provider into `composition/eks`.

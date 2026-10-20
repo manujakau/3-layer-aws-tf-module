@@ -244,7 +244,7 @@ Four states rather than five. VPN reads nothing from VPC today but belongs to th
 
 1. Create `composition/network`, `ecr`, `eks` and `ecs` from today's `main.tf`, `variables.tf`, `outputs.tf` and `data.tf`. Keep the module block names exactly as they are now.
 2. Replace cross-module references with variables: `module.vpc.vpc_id` becomes `var.vpc_id`, and so on. Leave references inside one module, such as the ECS security groups, as they are.
-3. Back up the current infra state. The state bucket has versioning enabled, but take an explicit `terraform state pull` copy as well.
+3. Back up the current infra state. The state bucket is versioned (`versioning_enabled` creates `aws_s3_bucket_versioning`), but take an explicit `terraform state pull` copy as well.
 4. For each unit, start from a copy of the old state in its new key, then `terraform state rm` the modules that unit does not own.
 5. Run `terragrunt plan` in each unit. Every plan should show **no changes**. Check that each resource is owned by exactly one state.
 6. Retire `composition/infra` and delete its old state key last.
