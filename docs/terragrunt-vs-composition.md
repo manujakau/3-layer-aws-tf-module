@@ -1,5 +1,7 @@
 # Terragrunt vs. composition directories
 
+> **Update:** the repo has since moved to Terragrunt, using Option 3 in [terragrunt-architecture.md](terragrunt-architecture.md). This page records the original decision.
+
 Do we need Terragrunt, or is the plain `composition/` directory approach enough?
 
 **Short answer:** we don't need Terragrunt yet. The composition approach fits the repo as it is today. Revisit the decision once there are several environments, or once the infra stack is split into several states.
@@ -11,7 +13,7 @@ Do we need Terragrunt, or is the plain `composition/` directory approach enough?
 - **1 region, 1 environment**: `eu-central-1/prod`.
 - **2 stacks**, applied in a fixed order: `composition/remotebackend`, then `composition/infra`.
 - **One cross-stack handoff**: the state bucket and lock table names from `remotebackend` go into a git-ignored `backend.config`, which is used to initialise `infra`. This happens once, by hand.
-- **All module wiring happens inside one root module**: [`composition/infra/eu-central-1/prod/main.tf`](../composition/infra/eu-central-1/prod/main.tf). For example VPC → EKS/ECS and ECR → ECS. Terraform already orders these from its own dependency graph.
+- **All module wiring happens inside one root module**: `composition/infra/eu-central-1/prod/main.tf`. For example VPC → EKS/ECS and ECR → ECS. Terraform already orders these from its own dependency graph.
 
 ## What Terragrunt would solve
 
@@ -27,7 +29,7 @@ None of these is painful at the current size of the repo.
 
 ### Adding environments
 
-Every new `composition/infra/<region>/<env>/` folder means copying `main.tf`, `variables.tf` (about 280 lines), `providers.tf`, `outputs.tf` and `data.tf`. Only `terraform.tfvars` and `backend.config` actually differ between environments. With 3 environments × 2 regions there would be six copies of near-identical code that drift apart over time. This is the main cost of the plain composition pattern.
+Every new `composition/infra/<region>/<env>/` folder means copying `main.tf`, `variables.tf` (about 240 lines), `providers.tf`, `outputs.tf` and `data.tf`. Only `terraform.tfvars` and `backend.config` actually differ between environments. With 3 environments × 2 regions there would be six copies of near-identical code that drift apart over time. This is the main cost of the plain composition pattern.
 
 ### Splitting the state
 
@@ -71,6 +73,6 @@ Adopting Terragrunt does not require removing the composition layer. See [terrag
 
 These apply whichever approach is chosen. Fix them before copying the composition to new environments, or they will be copied too.
 
-- **No region on the AWS provider.** [`providers.tf`](../composition/infra/eu-central-1/prod/providers.tf) has no default `provider "aws"` block that sets a region. `var.region`, `var.role_name` and `var.profile_name` are declared but never used, so the region currently comes from the shell environment (`AWS_REGION` or the AWS profile). Add `provider "aws" { region = var.region }`, plus the profile or assume-role settings.
+- **No region on the AWS provider.** `providers.tf` has no default `provider "aws"` block that sets a region. `var.region`, `var.role_name` and `var.profile_name` are declared but never used, so the region currently comes from the shell environment (`AWS_REGION` or the AWS profile). Add `provider "aws" { region = var.region }`, plus the profile or assume-role settings. (Fixed: the provider is now generated from [`live/root.hcl`](../live/root.hcl).)
 - **Leftover provider alias.** `configuration_aliases = [aws.XXX_old]` and the empty `provider "aws" { alias = "XXX_old" }` look like leftovers. `configuration_aliases` only has an effect in child modules, so both can be removed.
 - **Unused or duplicate variables.** `application_name` and `app_name` hold the same value. `variable "subnets"` and `variable "sg_service_ingress_rules"` in the composition are declared but never used.

@@ -64,6 +64,12 @@ variable "force_destroy" {
   default     = false
 }
 
+variable "versioning_enabled" {
+  description = "Enable versioning on the bucket."
+  type        = bool
+  default     = false
+}
+
 variable "accelerate_configuration" {
   description = "(Optional) Transfer acceleration state of the bucket. Valid values: Enabled, Suspended."
   type        = string

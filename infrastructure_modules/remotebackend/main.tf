@@ -18,6 +18,8 @@ module "s3_bucket_terraform_remote_backend" {
   tags          = local.tags
   force_destroy = var.force_destroy
 
+  versioning_enabled = var.versioning_enabled
+
   cors_rule                            = local.cors_rule
   server_side_encryption_configuration = local.server_side_encryption_configuration
 
