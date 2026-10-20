@@ -10,7 +10,7 @@ remote_state {
     if_exists = "overwrite_terragrunt"
   }
   config = {
-    bucket       = "<bucket-name-from-step-1>"
+    bucket       = "s3-euc1-terraform-eks-demo-infra-prod-terraform-backend-2"
     key          = "${path_relative_to_include()}/terraform.tfstate"
     region       = "eu-central-1"
     encrypt      = true
