@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="468" viewBox="0 0 980 468" role="img" aria-labelledby="t d">
+<title id="t">Option 1: Terragrunt wraps the existing composition</title>
+<desc id="d">Option 1. root.hcl is included by terragrunt.hcl in the infra composition folder. terragrunt.hcl passes inputs to variables.tf, fills the empty S3 backend block in providers.tf at init, and generates provider_aws.tf with the region. The remotebackend bootstrap stays plain Terraform and creates the S3 bucket that holds the infra state.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#545B64"/></marker>
+<marker id="flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D45B07"/></marker>
+</defs>
+<rect width="980" height="468" fill="#FFFFFF"/>
+<text x="40" y="38" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#232F3E" text-anchor="start">Option 1: Terragrunt wraps the existing composition</text>
+<text x="40" y="60" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5A6B7D" text-anchor="start">Two new files and one generated file. main.tf and the infra state key stay unchanged.</text>
+<rect x="70" y="108" width="230" height="64" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="185.0" y="135.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">root.hcl</text>
+<text x="185.0" y="154.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">repo root · written once</text>
+<rect x="400" y="108" width="300" height="64" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="550.0" y="135.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">terragrunt.hcl</text>
+<text x="550.0" y="154.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">composition/infra/eu-central-1/prod</text>
+<line x1="302" y1="140" x2="396" y2="140" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="349" y="132" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">include</text>
+<rect x="340" y="234" width="570" height="150" rx="8" fill="#F7F9FB" stroke="#C9D2DC" stroke-width="1.2"/>
+<text x="356" y="375" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">Terraform runs here · existing composition root, same state</text>
+<rect x="356" y="272" width="128" height="82" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="420" y="296" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">main.tf</text>
+<text x="420" y="316" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">unchanged</text>
+<text x="420" y="334" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">module wiring</text>
+<rect x="496" y="272" width="128" height="82" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="560" y="296" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">variables.tf</text>
+<text x="560" y="316" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">+ terraform.tfvars</text>
+<text x="560" y="334" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">unchanged</text>
+<rect x="636" y="272" width="128" height="82" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="700" y="296" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">providers.tf</text>
+<text x="700" y="316" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">backend "s3" {}</text>
+<text x="700" y="334" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">filled at init</text>
+<rect x="776" y="272" width="128" height="82" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="840" y="296" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">provider_aws.tf</text>
+<text x="840" y="316" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">generated</text>
+<text x="840" y="334" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">region · role</text>
+<line x1="490" y1="174" x2="558" y2="268" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="518" y="216" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">inputs</text>
+<line x1="560" y1="174" x2="696" y2="268" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="617" y="216" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">remote_state</text>
+<line x1="630" y1="174" x2="836" y2="268" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="715" y="216" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">generate</text>
+<rect x="70" y="234" width="210" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="175.0" y="257.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">composition/remotebackend</text>
+<text x="175.0" y="276.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">plain Terraform · run once</text>
+<rect x="70" y="328" width="210" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="175.0" y="351.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">S3 state bucket</text>
+<text x="175.0" y="370.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">infra key unchanged</text>
+<line x1="175" y1="291" x2="175" y2="324" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="183" y="312" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">creates</text>
+<line x1="338" y1="356" x2="284" y2="356" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="311" y="348" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">state</text>
+<rect x="40" y="427" width="26" height="15" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="74" y="438" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">new or changed by Terragrunt</text>
+<rect x="270" y="427" width="26" height="15" rx="8" fill="none" stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="304" y="438" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">retired / outside the run graph</text>
+<line x1="510" y1="434" x2="544" y2="434" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="552" y="438" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">added by Terragrunt</text>
+<line x1="700" y1="434" x2="734" y2="434" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="742" y="438" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">existing Terraform call</text>
+</svg>

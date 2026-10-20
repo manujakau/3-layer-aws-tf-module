@@ -63,6 +63,8 @@ Wrap these commands in a Makefile or a CI matrix. Run by hand, it is easy to app
 | Many environments/regions, same stack | Composition with a shared root module + per-env `tfvars` / `backend.config` |
 | Many environments **and** the state split into several dependent stacks | **Terragrunt** (or Terraform Stacks if using HCP Terraform) |
 
+Adopting Terragrunt does not require removing the composition layer. See [terragrunt-architecture.md](terragrunt-architecture.md) for the two ways it can sit on top of this repo.
+
 ---
 
 ## Other issues found during the review
