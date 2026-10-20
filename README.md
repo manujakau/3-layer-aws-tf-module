@@ -34,15 +34,15 @@ Each layer calls only the layer directly below it. [Terragrunt](https://terragru
 
 ### Module stack
 
-How the layers stack, which module calls which, and how module outputs are fed into other modules' inputs.
+How the Terragrunt units sit on top of the three layers, which module calls which, and how outputs are fed into other modules' inputs.
 
-![3-layer Terraform module stack](docs/images/module-stack.svg)
+![3-layer Terraform module stack with Terragrunt](docs/images/module-stack.svg)
 
-- **Grey arrows** are module calls (`source = "../../…"`).
-- **Orange arrows** are values passed from one module's outputs into another module's inputs. Between units this happens in Terragrunt `dependency` blocks (see [wiring](#how-the-modules-are-wired-together)). Infrastructure modules never reference each other directly.
+- **Top band** is the Terragrunt `live/` tree. Every unit includes `live/root.hcl`, which generates the backend and the AWS provider, and points `terraform.source` at one composition root.
+- **Grey arrows** are module calls (`source = "../../…"`) and each unit's `terraform.source`.
+- **Orange arrows** are values passed from one module's outputs into another module's inputs. Between units this happens in Terragrunt `dependency` blocks; inside a unit it happens in the composition or infrastructure module (see [wiring](#how-the-modules-are-wired-together)). Infrastructure modules never reference each other directly.
+- **Dashed orange arrow** is the one manual handoff: the bucket name from the bootstrap stack, written once into `live/root.hcl`.
 - **Dashed boxes** are modules that exist but are switched off in the committed prod inputs.
-
-> The diagram shows the layout from before the split into four units. The module calls and the values passed between modules are unchanged.
 
 ### Deployed AWS architecture
 
@@ -56,7 +56,7 @@ What the bootstrap stack and the four units create in `eu-central-1` with the co
 
 ```text
 .
-├── bootstrap/remotebackend/eu-central-1/prod/   # S3 + DynamoDB + KMS for remote state (plain Terraform, local state)
+├── bootstrap/remotebackend/eu-central-1/prod/   # S3 + DynamoDB + KMS for remote state (plain Terraform, state via backend.hcl)
 │
 ├── live/                                 # Terragrunt: per-environment values, backend, ordering
 │   ├── root.hcl                          #   remote_state (key per unit) + generated provider "aws"
@@ -123,7 +123,7 @@ Rules the layout enforces:
 
 | Module | Calls | What it adds | Key outputs |
 |---|---|---|---|
-| `remotebackend` | `storage/s3`, `database/dynamodb`, `identity/kms_key` | Region-coded names, a `random_integer` bucket suffix, an S3 bucket policy and a KMS key policy. Encrypts the bucket with the new CMK. | `s3_id`, `s3_arn`, `dynamodb_id`, `dynamodb_arn`, `s3_kms_arn`, `s3_kms_alias_arn`, `s3_kms_id` |
+| `remotebackend` | `storage/s3`, `database/dynamodb`, `identity/kms_key` | Region-coded names, a `random_integer` bucket suffix, an S3 bucket policy and a KMS key policy. Encrypts the bucket with the new CMK and enables versioning. | `s3_id`, `s3_arn`, `dynamodb_id`, `dynamodb_arn`, `s3_kms_arn`, `s3_kms_alias_arn`, `s3_kms_id` |
 | `vpc` | `network/vpc` | Subnet tags `Tier` and `kubernetes.io/role/(internal-)elb`, plus `kubernetes.io/cluster/<cluster_name> = shared` so EKS load balancers can find subnets. | `vpc_id`, `vpc_cidr_block`, `public_subnets`, `private_subnets`, `isolate_subnets` (+ `*_cidr_blocks`) |
 | `vpn` | `network/vpn` | Pass-through for customer gateways. | `customer_gateway_ids` |
 | `eks` | `containers/eks` | Pass-through for cluster settings. | `cluster_id`, `cluster_arn`, `cluster_endpoint`, `cluster_version` |
@@ -140,7 +140,7 @@ Rules the layout enforces:
 | `containers/ecr` | `aws_ecr_repository` |
 | `containers/ecs` | `aws_ecs_cluster`, `aws_ecs_task_definition` (Fargate, 256 CPU / 512 MiB), `aws_ecs_service`, `aws_alb`, `aws_lb_listener` (:80), `aws_lb_target_group` (ip), task execution `aws_iam_role` |
 | `containers/eks` | `aws_eks_cluster`, private `aws_eks_node_group`, `aws_iam_openid_connect_provider`, IAM roles / groups / users (admin, developer, read-only), `kubernetes_config_map_v1` (aws-auth), cluster roles / bindings, a namespace, and its own `kubernetes` provider |
-| `storage/s3` | `aws_s3_bucket`, ACL, ownership controls, bucket policy, public access block, SSE configuration, CORS, accelerate |
+| `storage/s3` | `aws_s3_bucket`, ACL, ownership controls, bucket policy, public access block, SSE configuration, versioning, CORS, accelerate |
 | `database/dynamodb` | `aws_dynamodb_table` |
 | `identity/kms_key` | `aws_kms_key`, `aws_kms_alias` |
 
@@ -339,6 +339,6 @@ It authenticates through GitHub OIDC and needs these repository secrets: `AWS_RO
 These come from reading the current code. Fix them before relying on the stack in production.
 
 1. **The ALB is not reachable from the internet.** `module.ecs` gets `subnets = var.private_subnet_ids` (the `network` unit's private subnets). `containers/ecs` uses that one list for both the ALB and the service. The ALB is internet-facing (no `internal` flag), but private subnets route `0.0.0.0/0` to the NAT gateway, not the IGW. Add a separate `alb_subnets` input fed from the `network` unit's `public_subnets`. Also note that `assign_public_ip = true` on the service is pointless in private subnets: the public IP has no IGW route.
-2. **`eu-central-1` appears twice in the remote backend's `region_tag`.** In [infrastructure_modules/remotebackend/data.tf](infrastructure_modules/remotebackend/data.tf) it is mapped to both `ec1` and `euc1`. Terraform keeps the last one, so backend resources are named `…-euc1-…` while the infra stack uses `ec1`. Remove one entry. Changing it on a deployed backend renames, and so replaces, the bucket, table and KMS alias.
+2. **`eu-central-1` appears twice in the remote backend's `region_tag`.** In [infrastructure_modules/remotebackend/data.tf](infrastructure_modules/remotebackend/data.tf) it is mapped to both `ec1` and `euc1`. Terraform keeps the last one, so backend resources are named `…-euc1-…` while the units use `ec1`. Remove one entry. Changing it on a deployed backend renames, and so replaces, the bucket, table and KMS alias.
 3. **Some variable names are misspelled.** `task_famliy` and `alb_seurity_group_id` are misspelled across all three layers. Renaming them is a breaking interface change, so do it in one pass.
 4. **`containers/eks` declares its own `kubernetes` provider.** A module that configures a provider can't use `count` / `for_each` / `depends_on` and is awkward to remove. Consider moving the provider into `composition/eks`.
