@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="598" viewBox="0 0 980 598" role="img" aria-labelledby="t d">
+<title id="t">Option 2: Terragrunt units and their dependencies</title>
+<desc id="d">Option 2 dependency graph. Wave 1 applies vpc, ecr and vpn, which have no dependencies. Wave 2 applies eks, which reads subnets from vpc, and ecs, which reads vpc_id and private subnets from vpc and the repository URL from ecr. Each unit has its own state. The remotebackend bootstrap sits outside the graph and creates the state bucket.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#545B64"/></marker>
+<marker id="flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D45B07"/></marker>
+</defs>
+<rect width="980" height="598" fill="#FFFFFF"/>
+<text x="40" y="38" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#232F3E" text-anchor="start">Option 2: Terragrunt units and their dependencies</text>
+<text x="40" y="60" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5A6B7D" text-anchor="start">Each infrastructure module is a unit with its own state. run --all applies them in two waves.</text>
+<text x="200" y="112" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#232F3E" text-anchor="middle">Wave 1 · no dependencies</text>
+<text x="740" y="112" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#232F3E" text-anchor="middle">Wave 2 · after wave 1</text>
+<rect x="100" y="134" width="200" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="200.0" y="157.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">vpc</text>
+<text x="200.0" y="176.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">infrastructure_modules/vpc</text>
+<text x="200" y="206" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">state: …/prod/vpc</text>
+<rect x="100" y="254" width="200" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="200.0" y="277.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">ecr</text>
+<text x="200.0" y="296.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">infrastructure_modules/ecr</text>
+<text x="200" y="326" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">state: …/prod/ecr</text>
+<rect x="100" y="374" width="200" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="200.0" y="397.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">vpn</text>
+<text x="200.0" y="416.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">infrastructure_modules/vpn</text>
+<text x="200" y="446" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">state: …/prod/vpn · no deps</text>
+<rect x="640" y="134" width="200" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="740.0" y="157.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">eks</text>
+<text x="740.0" y="176.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">infrastructure_modules/eks</text>
+<text x="740" y="206" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">state: …/prod/eks</text>
+<rect x="640" y="254" width="200" height="56" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="740.0" y="277.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">ecs</text>
+<text x="740.0" y="296.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">infrastructure_modules/ecs</text>
+<text x="740" y="326" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">state: …/prod/ecs</text>
+<text x="740" y="344" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle">SG wiring must move inside the module</text>
+<line x1="302" y1="162" x2="636" y2="162" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="469" y="154" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">public_subnets · private_subnets</text>
+<line x1="302" y1="180" x2="636" y2="268" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="471" y="217" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke" transform="rotate(14.8 471 217)">vpc_id · private_subnets</text>
+<line x1="302" y1="282" x2="636" y2="282" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="469" y="274" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">ecr_repository_url</text>
+<rect x="70" y="472" width="840" height="50" rx="8" fill="none" stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="490.0" y="492.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">bootstrap/remotebackend · plain Terraform, local state, outside the graph</text>
+<text x="490.0" y="511.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">creates the S3 bucket that all five unit states live in · bucket name is fixed in root.hcl</text>
+<rect x="40" y="557" width="26" height="15" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="74" y="568" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">new or changed by Terragrunt</text>
+<rect x="270" y="557" width="26" height="15" rx="8" fill="none" stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="304" y="568" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">retired / outside the run graph</text>
+<line x1="510" y1="564" x2="544" y2="564" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="552" y="568" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">added by Terragrunt</text>
+<line x1="700" y1="564" x2="734" y2="564" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="742" y="568" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">existing Terraform call</text>
+</svg>
