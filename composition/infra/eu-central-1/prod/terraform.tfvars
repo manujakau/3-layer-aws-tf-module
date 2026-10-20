@@ -1,12 +1,9 @@
 ########################################
 # Environment setting
 ########################################
-region           = "eu-central-1"
-role_name        = "Admin"
-profile_name     = "default"
-env              = "prod"
-application_name = "tf-moduler"
-app_name         = "tf-moduler"
+region   = "eu-central-1"
+env      = "prod"
+app_name = "tf-moduler"
 
 ########################################
 # VPC

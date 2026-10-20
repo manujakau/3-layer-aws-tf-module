@@ -7,18 +7,6 @@ variable "region" {
   type = string
 }
 
-variable "role_name" {
-  type = string
-}
-
-variable "profile_name" {
-  type = string
-}
-
-variable "application_name" {
-  description = "The name of the application."
-  type        = string
-}
 
 variable "app_name" {
   description = "The name of the application."
@@ -173,7 +161,7 @@ variable "create_sg" {
 
 variable "sg_alb_name" {
   description = "Security group name"
-  default = ""
+  default     = ""
 }
 
 variable "sg_alb_description" {
@@ -183,27 +171,22 @@ variable "sg_alb_description" {
 
 variable "sg_alb_ingress_rules" {
   description = "List of ingress rules"
-  default = []
+  default     = []
 }
 
 variable "egress_rules" {
   description = "List of egress rules"
-  default = []
+  default     = []
 }
 
 variable "sg_service_name" {
   description = "Security group name"
-  default = ""
+  default     = ""
 }
 
 variable "sg_service_description" {
   description = "Security group description"
   default     = ""
-}
-
-variable "sg_service_ingress_rules" {
-  description = "List of ingress rules"
-  default = []
 }
 
 
@@ -218,11 +201,6 @@ variable "ecs_cluster_name" {
   default     = ""
 }
 
-variable "subnets" {
-  description = "A list of subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
 
 variable "ecs_task_execution_role_name" {
   description = "ECS Task Execution Role Name"
