@@ -1,16 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="578" viewBox="0 0 1060 578" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1310" height="578" viewBox="0 0 1310 578" role="img" aria-labelledby="t d">
 <title id="t">Terragrunt options: what changes per layer</title>
-<desc id="d">Layer comparison. Today and Option 1 both run composition/infra as the single root module; Option 1 only replaces the config row with Terragrunt files. Option 2 skips the composition layer and points each unit directly at an infrastructure module, giving five states.</desc>
+<desc id="d">Layer comparison. Today and Option 1 both run composition/infra as the single root module; Option 1 only replaces the config row with Terragrunt files. Option 2 skips the composition layer and points each unit directly at an infrastructure module, giving five states. Option 3 splits composition/infra into four small composition roots, one per unit, giving four states.</desc>
 <defs>
 <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#545B64"/></marker>
 <marker id="flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D45B07"/></marker>
 </defs>
-<rect width="1060" height="578" fill="#FFFFFF"/>
+<rect width="1310" height="578" fill="#FFFFFF"/>
 <text x="40" y="38" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#232F3E" text-anchor="start">Terragrunt options: what changes per layer</text>
-<text x="40" y="60" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5A6B7D" text-anchor="start">Today and Option 1 keep composition/infra as the root module. Option 2 bypasses it.</text>
+<text x="40" y="60" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5A6B7D" text-anchor="start">Option 1 keeps composition/infra as one root. Option 2 bypasses composition. Option 3 splits it into small roots.</text>
 <text x="350" y="116" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#232F3E" text-anchor="middle">Today</text>
 <text x="610" y="116" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#232F3E" text-anchor="middle">Option 1 · wrap</text>
 <text x="870" y="116" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#232F3E" text-anchor="middle">Option 2 · units</text>
+<text x="1130" y="116" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#232F3E" text-anchor="middle">Option 3 · split + units</text>
 <text x="40" y="180" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#5A6B7D" text-anchor="start">Config &amp; wiring</text>
 <text x="40" y="286" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#5A6B7D" text-anchor="start">Root module · state</text>
 <text x="40" y="384" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#5A6B7D" text-anchor="start">Infrastructure layer</text>
@@ -48,6 +49,18 @@
 <rect x="750" y="442" width="240" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
 <text x="870.0" y="465.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">resource_modules/*</text>
 <text x="870.0" y="484.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">unchanged</text>
+<rect x="1010" y="140" width="240" height="72" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="1130.0" y="171.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">root · region · env .hcl</text>
+<text x="1130.0" y="190.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">one terragrunt.hcl per unit</text>
+<rect x="1010" y="246" width="240" height="72" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="1130.0" y="277.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">composition/&lt;component&gt;</text>
+<text x="1130.0" y="296.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">4 small roots · 4 states</text>
+<rect x="1010" y="352" width="240" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="1130.0" y="375.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">infrastructure_modules/*</text>
+<text x="1130.0" y="394.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">unchanged</text>
+<rect x="1010" y="442" width="240" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="1130.0" y="465.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">resource_modules/*</text>
+<text x="1130.0" y="484.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">unchanged</text>
 <rect x="750" y="246" width="180" height="72" rx="8" fill="none" stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 4"/>
 <text x="840.0" y="277.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#5A6B7D" text-anchor="middle" text-decoration="line-through">composition/infra</text>
 <text x="840.0" y="296.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="middle">retired</text>
@@ -67,6 +80,12 @@
 <text x="978" y="282" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke" transform="rotate(90 978 282)">terraform.source</text>
 <line x1="870" y1="409" x2="870" y2="439" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
 <text x="878" y="429" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">calls</text>
+<line x1="1130" y1="213" x2="1130" y2="243" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="1138" y="233" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">terraform.source</text>
+<line x1="1130" y1="319" x2="1130" y2="349" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="1138" y="339" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">calls</text>
+<line x1="1130" y1="409" x2="1130" y2="439" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="1138" y="429" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">calls</text>
 <rect x="40" y="537" width="26" height="15" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
 <text x="74" y="548" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">new or changed by Terragrunt</text>
 <rect x="270" y="537" width="26" height="15" rx="8" fill="none" stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 4"/>

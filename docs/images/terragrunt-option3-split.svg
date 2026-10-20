@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="608" viewBox="0 0 1060 608" role="img" aria-labelledby="t d">
+<title id="t">Option 3: Terragrunt units over small composition roots</title>
+<desc id="d">Option 3. Four Terragrunt units in live/eu-central-1/prod (network, eks, ecr, ecs) each point at a small composition root with no environment folders, which calls the existing infrastructure modules. network passes subnets to eks and vpc_id plus private subnets to ecs; ecr passes the repository URL to ecs. The ECS security-group self-wiring stays in composition/ecs.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#545B64"/></marker>
+<marker id="flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D45B07"/></marker>
+</defs>
+<rect width="1060" height="608" fill="#FFFFFF"/>
+<text x="40" y="38" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#232F3E" text-anchor="start">Option 3: Terragrunt units over small composition roots</text>
+<text x="40" y="60" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5A6B7D" text-anchor="start">composition/infra is split per component. Terragrunt passes outputs between the four states.</text>
+<rect x="40" y="114" width="980" height="160" rx="8" fill="#F7F9FB" stroke="#C9D2DC" stroke-width="1.2"/>
+<text x="56" y="140" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start">live/eu-central-1/prod</text>
+<text x="56" y="158" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">Terragrunt units · per env</text>
+<rect x="40" y="304" width="980" height="112" rx="8" fill="#F7F9FB" stroke="#C9D2DC" stroke-width="1.2"/>
+<text x="56" y="330" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start">composition/</text>
+<text x="56" y="348" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">small roots · no env folders</text>
+<rect x="40" y="446" width="980" height="98" rx="8" fill="#F7F9FB" stroke="#C9D2DC" stroke-width="1.2"/>
+<text x="56" y="472" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start">infrastructure_modules/</text>
+<text x="56" y="490" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">unchanged</text>
+<rect x="230" y="194" width="170" height="56" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="315.0" y="217.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">network</text>
+<text x="315.0" y="236.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">wave 1 · own state</text>
+<rect x="430" y="194" width="170" height="56" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="515.0" y="217.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">eks</text>
+<text x="515.0" y="236.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">wave 2 · own state</text>
+<rect x="630" y="194" width="170" height="56" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="715.0" y="217.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">ecr</text>
+<text x="715.0" y="236.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">wave 1 · own state</text>
+<rect x="830" y="194" width="170" height="56" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="915.0" y="217.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">ecs</text>
+<text x="915.0" y="236.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">wave 2 · own state</text>
+<rect x="230" y="328" width="170" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="315.0" y="351.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">composition/network</text>
+<text x="315.0" y="370.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">module vpc + module vpn</text>
+<line x1="315" y1="251" x2="315" y2="324" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="323" y="292" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">source</text>
+<rect x="430" y="328" width="170" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="515.0" y="351.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">composition/eks</text>
+<text x="515.0" y="370.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">module eks</text>
+<line x1="515" y1="251" x2="515" y2="324" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="523" y="292" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">source</text>
+<rect x="630" y="328" width="170" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="715.0" y="351.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">composition/ecr</text>
+<text x="715.0" y="370.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">module ecr</text>
+<line x1="715" y1="251" x2="715" y2="324" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="723" y="292" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">source</text>
+<rect x="830" y="328" width="170" height="56" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="915.0" y="351.0" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">composition/ecs</text>
+<text x="915.0" y="370.0" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle">module ecs</text>
+<line x1="915" y1="251" x2="915" y2="324" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="923" y="292" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">source</text>
+<text x="915" y="402" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle">SG self-wiring stays here</text>
+<polyline points="340,192 340,174 505,174 505,190" fill="none" stroke="#D45B07" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#flow)"/>
+<text x="422" y="168" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">subnets</text>
+<polyline points="280,192 280,142 945,142 945,190" fill="none" stroke="#D45B07" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#flow)"/>
+<text x="612" y="136" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">vpc_id · private_subnets</text>
+<polyline points="715,192 715,174 890,174 890,190" fill="none" stroke="#D45B07" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#flow)"/>
+<text x="802" y="168" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="600" fill="#D45B07" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">ecr_repository_url</text>
+<rect x="230" y="476" width="80" height="44" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="270.0" y="502" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">vpc</text>
+<rect x="320" y="476" width="80" height="44" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="360.0" y="502" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">vpn</text>
+<rect x="430" y="476" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="515.0" y="502" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">eks</text>
+<rect x="630" y="476" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="715.0" y="502" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">ecr</text>
+<rect x="830" y="476" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#8D99A8" stroke-width="1.2"/>
+<text x="915.0" y="502" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#232F3E" text-anchor="middle">ecs</text>
+<line x1="280" y1="385" x2="270" y2="472" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<line x1="350" y1="385" x2="360" y2="472" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="315" y="436" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="middle" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">calls</text>
+<line x1="515" y1="385" x2="515" y2="472" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="523" y="436" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">calls</text>
+<line x1="715" y1="385" x2="715" y2="472" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="723" y="436" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">calls</text>
+<line x1="915" y1="385" x2="915" y2="472" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="923" y="436" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="400" fill="#5A6B7D" text-anchor="start" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">calls</text>
+<rect x="40" y="567" width="26" height="15" rx="8" fill="#FDF1E8" stroke="#D45B07" stroke-width="1.4"/>
+<text x="74" y="578" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">new or changed by Terragrunt</text>
+<rect x="270" y="567" width="26" height="15" rx="8" fill="none" stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="304" y="578" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">retired / outside the run graph</text>
+<line x1="510" y1="574" x2="544" y2="574" stroke="#D45B07" stroke-width="1.6" marker-end="url(#flow)"/>
+<text x="552" y="578" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">added by Terragrunt</text>
+<line x1="700" y1="574" x2="734" y2="574" stroke="#545B64" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="742" y="578" font-family="'Amazon Ember','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5A6B7D" text-anchor="start">existing Terraform call</text>
+</svg>
