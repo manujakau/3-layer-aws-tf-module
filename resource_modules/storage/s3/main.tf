@@ -43,6 +43,16 @@ resource "aws_s3_bucket_cors_configuration" "this" {
 }
 
 
+resource "aws_s3_bucket_versioning" "this" {
+  count = var.versioning_enabled ? 1 : 0
+
+  bucket = aws_s3_bucket.this.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
 resource "aws_s3_bucket_accelerate_configuration" "this" {
   bucket = aws_s3_bucket.this.id
   status = var.accelerate_configuration
