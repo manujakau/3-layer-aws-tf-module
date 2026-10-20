@@ -1,4 +1,3 @@
-# VPC #
 output "vpc_id" {
   description = "The ID of the VPC"
   value       = module.vpc.vpc_id
@@ -39,47 +38,7 @@ output "public_subnets_cidr_blocks" {
   value       = module.vpc.public_subnets_cidr_blocks
 }
 
-# CGW #
 output "customer_gateway_ids" {
   description = "List of IDs of Customer Gateway"
   value       = module.vpn.customer_gateway_ids
-}
-
-# EKS #
-output "cluster_id" {
-  description = "The name/id of the EKS cluster."
-  value       = module.eks.cluster_id
-}
-
-output "cluster_arn" {
-  description = "The Amazon Resource Name (ARN) of the cluster."
-  value       = module.eks.cluster_arn
-}
-
-output "cluster_endpoint" {
-  description = "The endpoint for your EKS Kubernetes API."
-  value       = module.eks.cluster_endpoint
-}
-
-output "cluster_version" {
-  description = "The Kubernetes server version for the EKS cluster."
-  value       = module.eks.cluster_version
-}
-
-# ECR #
-output "ecr_repository_url" {
-  description = "URL of the ECR Repository."
-  value       = module.ecr.ecr_repository_url
-}
-
-# SECURITY GROUPS #
-
-output "security_group_alb_id" {
-  description = "ALB Security Group ID"
-  value       = module.ecs.security_group_alb_id
-}
-
-output "service_security_group_id" {
-  description = "Service Security Group ID"
-  value       = module.ecs.service_security_group_id
 }

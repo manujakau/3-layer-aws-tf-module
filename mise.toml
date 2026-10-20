@@ -1,0 +1,3 @@
+[tools]
+terraform = "1.16.6"
+terragrunt = "1.1.6"
