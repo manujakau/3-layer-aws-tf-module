@@ -1,5 +1,7 @@
 # Terragrunt architecture options
 
+> **Status:** Option 3 is implemented. See `composition/` and `live/`.
+
 How Terragrunt could sit on top of the existing composition → infrastructure → resource layers, if we adopt it.
 
 There are three ways to do it:

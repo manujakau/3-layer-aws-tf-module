@@ -1,5 +1,7 @@
 # Terragrunt vs. composition directories
 
+> **Update:** the repo has since moved to Terragrunt, using Option 3 in [terragrunt-architecture.md](terragrunt-architecture.md). This page records the original decision.
+
 Do we need Terragrunt, or is the plain `composition/` directory approach enough?
 
 **Short answer:** we don't need Terragrunt yet. The composition approach fits the repo as it is today. Revisit the decision once there are several environments, or once the infra stack is split into several states.
