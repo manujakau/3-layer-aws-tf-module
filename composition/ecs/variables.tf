@@ -1,45 +1,54 @@
 variable "create_sg" {
   description = "Whether to create the security group"
+  type        = bool
   default     = false
 }
 
 variable "sg_alb_name" {
   description = "Security group name"
+  type        = string
   default     = ""
 }
 
 variable "sg_alb_description" {
   description = "Security group description"
+  type        = string
   default     = ""
 }
 
 variable "sg_alb_ingress_rules" {
   description = "List of ingress rules"
+  type        = any
   default     = []
 }
 
 variable "egress_rules" {
   description = "List of egress rules"
+  type        = any
   default     = []
 }
 
 variable "sg_service_name" {
   description = "Security group name"
+  type        = string
   default     = ""
 }
 
 variable "sg_service_description" {
   description = "Security group description"
+  type        = string
   default     = ""
 }
 
 variable "create_ecs" {
   description = "Is Create Amazon ECS"
+  type        = bool
   default     = false
 }
 
 variable "ecs_cluster_name" {
   description = "Name of the ECS. prefix"
+  type        = string
   default     = ""
 }
 

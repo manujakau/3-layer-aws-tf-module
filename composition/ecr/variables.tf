@@ -10,10 +10,12 @@ variable "app_name" {
 
 variable "create_ecr" {
   description = "Controls if VPN should be created"
+  type        = bool
   default     = false
 }
 
 variable "ecr_repository_name" {
   description = "Name of the Repository. prefix"
+  type        = string
   default     = ""
 }

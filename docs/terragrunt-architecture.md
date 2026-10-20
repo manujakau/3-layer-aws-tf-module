@@ -148,7 +148,7 @@ Adding staging means copying `prod/` to `staging/` and editing `env.hcl`. Each u
 ### Code that has to change
 
 - **ECS self-references.** `main.tf` passes `module.ecs.security_group_alb_id` and `module.ecs.service_security_group_id` back into `module.ecs`. A unit can't read its own outputs, so this wiring has to move inside `infrastructure_modules/ecs` before the split.
-- **Providers and versions.** The infrastructure modules declare only `required_version`. `root.hcl` has to generate `required_providers` (aws, kubernetes, helm, http) as well as the provider block.
+- **Providers and versions.** The infrastructure modules declare only `required_version`. `root.hcl` has to generate `required_providers` (aws, kubernetes) as well as the provider block.
 
 ### Example (illustrative)
 
@@ -230,10 +230,10 @@ Four states rather than five. VPN reads nothing from VPC today but belongs to th
 
 ### Costs and things to plan for
 
-- **Variables declared twice.** Each root's `variables.tf` re-declares the inputs of the module it calls. This is today's 259-line `variables.tf`, split across four files. Option 2 avoids it by sending inputs straight to the infrastructure module.
+- **Variables declared twice.** Each root's `variables.tf` re-declares the inputs of the module it calls. This is today's `variables.tf` (about 240 lines), split across four files. Option 2 avoids it by sending inputs straight to the infrastructure module.
 - **Relative paths change.** Module sources move from `../../../../infrastructure_modules/<name>` to `../../infrastructure_modules/<name>`. Use `source = "${get_repo_root()}//composition/<name>"` in the unit so the whole repo is copied into the cache and those paths resolve.
 - **Plan on a new environment.** `run --all plan` fails for `eks` and `ecs` until `network` has been applied, because the outputs don't exist yet. Add `mock_outputs` to the `dependency` blocks, limited to `init`, `validate` and `plan`.
-- **Disabled components.** `create_eks = false` today. Leave the `eks` unit out of `live/` instead of deploying an empty one that others depend on.
+- **Disabled components.** `create_eks = false` today. The `eks` unit stays in `live/` because nothing depends on it, so it plans to nothing.
 - **Upstream changes need ordered applies.** If the VPC subnets change, apply `network` first, then `eks` and `ecs`. `run --all apply` handles the order. A plan of `ecs` alone only sees outputs that are already applied.
 - **Pick one wiring method and one provider source.** Use Terragrunt `dependency` blocks *or* `terraform_remote_state`, not both. Either generate the provider from `root.hcl` or keep a `providers.tf` in each root, not both.
 - **Shared locals.** Tags, `vpc_name` and `account_id` are computed in today's `data.tf`. Pass them in from `root.hcl` / `env.hcl`, or repeat the small `data.tf` in each root that needs them.

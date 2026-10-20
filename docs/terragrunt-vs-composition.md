@@ -27,7 +27,7 @@ None of these is painful at the current size of the repo.
 
 ### Adding environments
 
-Every new `composition/infra/<region>/<env>/` folder means copying `main.tf`, `variables.tf` (about 280 lines), `providers.tf`, `outputs.tf` and `data.tf`. Only `terraform.tfvars` and `backend.config` actually differ between environments. With 3 environments × 2 regions there would be six copies of near-identical code that drift apart over time. This is the main cost of the plain composition pattern.
+Every new `composition/infra/<region>/<env>/` folder means copying `main.tf`, `variables.tf` (about 240 lines), `providers.tf`, `outputs.tf` and `data.tf`. Only `terraform.tfvars` and `backend.config` actually differ between environments. With 3 environments × 2 regions there would be six copies of near-identical code that drift apart over time. This is the main cost of the plain composition pattern.
 
 ### Splitting the state
 
