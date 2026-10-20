@@ -8,5 +8,6 @@ terraform {
     }
   }
 
-  # backend "s3" {} # use local backend to first create S3 bucket to store .tfstate later
+  # comment out for the first apply in a new account (no bucket yet)
+  backend "s3" {}
 }
