@@ -30,7 +30,7 @@ inputs = {
   private_subnet_ids = dependency.network.outputs.private_subnets
   ecr_repository_url = dependency.ecr.outputs.ecr_repository_url
 
-  create_sg          = true
+  create_sg          = false
   sg_alb_name        = "tf-moduler-alb"
   sg_alb_description = "moduler-ecs-alb"
   sg_alb_ingress_rules = [
@@ -56,7 +56,7 @@ inputs = {
     cidr_blocks = ["0.0.0.0/0"]
   }]
 
-  create_ecs                   = true
+  create_ecs                   = false
   ecs_cluster_name             = "tf-moduler"
   ecs_task_execution_role_name = "tf-moduler-ecs_task_execution"
   task_famliy                  = "tf-moduler-task"

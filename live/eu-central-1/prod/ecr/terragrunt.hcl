@@ -7,6 +7,6 @@ terraform {
 }
 
 inputs = {
-  create_ecr          = true
+  create_ecr          = false
   ecr_repository_name = "tf-moduler"
 }
